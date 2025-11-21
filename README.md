@@ -1,5 +1,3 @@
-# Bioinfo_2025
-
 # I. Planteamiento del problema
 La fiebre de Oropouche es una enfermedad causada por el virus Oropouche (Oropouche Virus u OROV) que prevalece en regiones amazónicas. Desde su primera detección, se han reportado más de 30 epidemias en ciertos países de Sudamérica, principalmente Brasil, donde, además, es recurrente la aparición de nuevos brotes del virus (Romero-Alvarez et al., 2023). En 2021, el Instituto Nacional de Salud (INS) emitió el último informe del estado de esta patología en Perú, notificando un total 105 casos diagnosticados ese año (Instituto Nacional de Salud, 2021), y destacando la persistencia de la enfermedad en la región amazónica en la última década (Alvarez-Falconi & Ríos, 2010; Castro et al., 2013; García et al., 2016), con casos emergentes incluso en regiones costeras (Martins-Luna et al., 2020). En conjunto, estos datos reflejan el potencial epidémico de este virus y resaltan la importancia de un programa de vigilancia.
 
