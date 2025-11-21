@@ -23,21 +23,27 @@ Considerando la recurrencia y la ventana de probabilidad para el surgimiento de 
 # III. Metodología
 
 1.	Obtención de secuencias del OROV
+
 Las secuencias nucleotídicas de los segmentos S, M y L de OROV fueron obtenidas de la base de datos BV-BRC. Se seleccionaron únicamente las secuencias.
 
 2.	Obtención de un genoma y proteoma de referencia
+
 Tomando como referencia los genes anotados de la cepa BeAn19991 en GeneBank, se realizó un alineamiento para mapear las secuencias codificantes de las seis proteínas de todos los linajes de OROV. Las secuencias nucleotídicas fueron transformadas a secuencias de aminoácidos en el programa Jalview para finalmente generar un consenso de las seis proteínas de OROV. Además, se ubicaron los residuos sujetos a variaciones entre las variantes y su tasa de mutación. Se consideró como sitios no conservados o variables aquellos cuyo porcentaje de variación entre cepas fue mayor al 5%. Esta información fue añadida a un documento con las mutaciones y sus posiciones dentro de las proteínas del virus. 
 
 3.	Búsqueda de alelos HLA
+
 La predicción de epítopos T se realizó con los alelos HLA más comunes en países amazónicos afectados por OROV. Además, de manera complementaria se realizó una segunda predicción empleando los alelos más frecuentes a nivel mundial. Estos grupos de alelos HLA se denominaron “SudAm” y “Global”, respectivamente. Para el conjunto de datos “SudAm” se consideró a Brasil, Perú, Ecuador, Colombia y Bolivia como los países con mayor incidencia o riesgo de surgimiento de brotes de OROV.
 
 4.	Predicción de epítopos T CD8 (epítopos CTL)
+
 Se predijo la afinidad de unión de los péptidos de las proteínas consenso de OROV al HLA-I utilizando los programas NetMHCpan v4.1 y MHCFlurry v2.0. Los péptidos evaluados tuvieron una longitud de 9 a 11 aminoácidos. Se realizaron las predicciones tanto para el conjunto de alelos HLA-I “SudAm”, como para el conjunto “Global”. En los resultados generados por NetMHCpan v4.1, se consideró como péptidos con una afinidad elevada (strong binders) y media (weak binders) a un alelo HLA aquellos cuyo valor Rank0 era de 0.5% y 2%, respectivamente. Por otro lado, en MHCFlurry v2.0, se consideró que un péptido presentaba afinidad por un alelo HLA si la puntuación de afinidad era menor a 500 nM.
 
 5.	Predicción de epítopos T CD4 (epítopos HTL)
+
 Se predijo la afinidad de unión de los péptidos de las proteínas consenso de OROV al HLA-I utilizando los programas NetMHCIIpan v4.0 y MixMHC2Pred. Se estableció una longitud de péptidos de 15 aminoácidos. Las predicciones fueron realizadas empleando el conjunto de alelos HLA-II “SudAm” y “Global”. Se consideró como péptidos con una afinidad elevada (strong binders) y media (weak binders) a un alelo HLA aquellos cuyo valor Rank era de 2% y 5%, respectivamente. De forma similar, en los resultados de MixMHC2Pred se consideró que un péptido tenía afinidad hacia un alelo HLA si su valor %Rank era menor a 5.
 
 6.	Selección de epítopos T
+
 6.1.	Filtro de consenso entre predictores
 Los resultados obtenidos de los programas para cada predicción fueron combinados. Para ello se elaboraron códigos en R: “HLA1_merging_script”, que combina los resultados de NetMHCpan y MHCFlurry, y “HLA2_merging_script” para combinar los resultados de NetMHCIIpan y MixMHC2Pred. De esta forma, se seleccionaron como candidatos a epítopos únicamente a los péptidos que, en consenso de los dos programas empleados, tenían afinidad por al menos un alelo HLA.
 6.2.	Filtro de conservación del epítopo
@@ -50,14 +56,17 @@ Los epítopos fueron ingresados a BLAST para realizar una búsqueda de similitud
 Finalmente, los epítopos que pasaron todos los filtros, fueron clasificados según su promiscuidad, es decir, número de alelos HLA con los que presenta afinidad. Luego se realizó la selección de los epítopos, de manera que se logre una cobertura total de los alelos HLA utilizados en el análisis, tanto los del conjunto de datos “SudAm”, como el “Global”. Además, se incluyó al menos un epítopo de todas las proteínas de OROV para que la vacuna diseñada tenga potencial de generar inmunidad hacia todas estas proteínas.
 
 7.	Predicción y selección de epítopos B
+
 La predicción de epítopos de células B se realizó en base a la secuencia consenso de la glicoproteína Gc de OROV. Se utilizaron los programas BepiPred v3.0, EpiDope (predictores por residuo), ABCPred, LBTope y SVMTrip (predictores por péptido). En los programas que realizan la predicción por péptido, se estableció una longitud de 16 aminoácidos. Posteriormente, se diseñó la línea de códigos “B_epitopes_align” para visualizar y mapear los epítopos B dentro de la proteína. Para considerar un péptido como candidato a epítopo, este tendría que haber sido predicho por Bepipred v3.0 y al menos dos de los otros cuatro predictores empleados. Se filtraron los candidatos con ausencia de glicosilaciones y ubicados en regiones conservadas de la proteína. Además, dado que en la disposición de la estructura tipo trípode conformada por las glicoproteínas Gn y Gc, solo el dominio “head” de Gc es accesible para anticuerpos, se eligieron únicamente los péptidos ubicados en dicho dominio. 
 
 8.	Construcción de la proteína multiepitópica
 Los epítopos seleccionados fueron concatenados a través de linkers para generar la proteína multiepitópica. Se realizaron distintas permutaciones de los epítopos y linkers, hasta obtener una en la cual no se hayan formado neoepítopos entre las uniones de dos epítopos. Para verificar esto, se predijeron epítopos en la proteína multiepitópica diseñada con los programas NetMHCpanI y NetMHCIIpan, y se evaluó la presencia de neoepítopos con la línea de códigos “Neoepitope_scanning”. Además, se añadieron dos secuencias en el extremo amino-terminal de la proteína: la primera correspondiente a un adyuvante, y la segunda, a un péptido-señal. Se generaron tres proteínas multiepitópicas diferenciadas por el adyuvante añadido, ya sea β-defensina 3, toxoide tétano-difteria (TpD) o el epítopo de unión pan-HLA DR (PADRE). Por otro lado, el péptido señal empleado fue la señal del activador tisular del plasminógeno (tPA).
 
-9.	Modelización de la proteína multi-epítopo
+9.	Modelización de la proteína multi-epítopo (Aún no terminado)
+
 Las estructuras de las tres proteínas diseñadas fueron modeladas con el servidor Robetta, donde se realiza la predicción con el método ab initio mediante el algoritmo RoseTTAfold. Los modelos generados fueron visualizados con el UCSF Chimera v17.1.3. 
 La calidad estructural de estos modelos fue validada empleando herramientas de evaluación estructural. En primer lugar, se utilizó ERRAT para analizar la confiabilidad de los modelos a partir del patrón de interacciones no enlazadas entre átomos. Posteriormente, se aplicó PROCHECK, que permite evaluar la estereoquímica de la estructura tridimensional mediante un diagrama de Ramachandran. Ambas herramientas fueron ejecutadas a través del servidor en línea SAVES v6.1. Entre las cinco estructuras modeladas por Robetta para cada candidato vacunal, se eligieron aquellas con los más óptimos valores de ERRAT y del gráfico Ramachandran.
 
-10.	Evaluaciones mediante biofísica computacional.
+10.	Evaluaciones mediante biofísica computacional (Aún no hecho)
+
 A través de herramientas de modelado molecular por AlphaFold2 se obtendrá la estructura de los candidatos vacunales multiepitópicos, y posteriormente mediante simulaciones de dinámicas moleculares con el programa GROMACS se determinará su estabilidad. Empleando el programa ClusPro, se realizarán ensayos de acoplamiento molecular contra receptores inmunes TLR para determinar la afinidad por estos y su potencial para inducir respuesta inmune. De igual manera la estabilidad de la interacción se determinará por simulaciones de dinámica molecular. Mediante estos análisis se espera seleccionar el mejor candidato multiepitópico, el cual será producido para la evaluación experimental.
