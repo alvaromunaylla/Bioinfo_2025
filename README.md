@@ -45,14 +45,23 @@ Se predijo la afinidad de unión de los péptidos de las proteínas consenso de 
 6.	Selección de epítopos T
 
 6.1.	Filtro de consenso entre predictores
+
 Los resultados obtenidos de los programas para cada predicción fueron combinados. Para ello se elaboraron códigos en R: “HLA1_merging_script”, que combina los resultados de NetMHCpan y MHCFlurry, y “HLA2_merging_script” para combinar los resultados de NetMHCIIpan y MixMHC2Pred. De esta forma, se seleccionaron como candidatos a epítopos únicamente a los péptidos que, en consenso de los dos programas empleados, tenían afinidad por al menos un alelo HLA.
+
 6.2.	Filtro de conservación del epítopo
+
 A continuación, se filtraron los péptidos ubicados en regiones conservadas. La línea de códigos “Conservation_filt_script” elaborada en R se utilizó para identificar si un péptido contenía un residuo sujeto a mutaciones, usando como referencia el archivo con los residuos variables entre cepas de OROV.
+
 6.3.	Generación de epítopos anidados
+
 Posteriormente, se generaron epítopos anidados, es decir, epítopos CD4 que contenían epítopos CD8. Esto se realizó con el objetivo de maximizar el número de epítopos que se incluirían en la proteína multiepitópica diseñada. Para esto se generó la línea de códigos “Nested_script”, la cual da como resultado una tabla con los epítopos CD4, los epítopos CD8 que incluye y los alelos HLA de tipo 2 y 1 para los cuales estos epítopos presentan afinidad. 
+
 6.4.	Filtro de epítopos con homología en humanos
+
 Los epítopos fueron ingresados a BLAST para realizar una búsqueda de similitudes con el proteoma humano y el proteoma de las bacterias más abundantes de la microbiota intestinal. Se descartaron los epítopos en los que se encontraron similitudes. De esta forma se evitaría que la proteína multiepitópica pueda generar autoinmunidad o una respuesta inmune desviada hacia bacterias de la microbiota.
+
 6.5.	Selección de epítopos según su promiscuidad
+
 Finalmente, los epítopos que pasaron todos los filtros, fueron clasificados según su promiscuidad, es decir, número de alelos HLA con los que presenta afinidad. Luego se realizó la selección de los epítopos, de manera que se logre una cobertura total de los alelos HLA utilizados en el análisis, tanto los del conjunto de datos “SudAm”, como el “Global”. Además, se incluyó al menos un epítopo de todas las proteínas de OROV para que la vacuna diseñada tenga potencial de generar inmunidad hacia todas estas proteínas.
 
 7.	Predicción y selección de epítopos B
