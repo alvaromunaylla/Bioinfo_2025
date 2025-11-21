@@ -24,7 +24,7 @@ Considerando la recurrencia y la ventana de probabilidad para el surgimiento de 
 
 1.	Obtención de secuencias del OROV
 
-Las secuencias nucleotídicas de los segmentos S, M y L de OROV fueron obtenidas de la base de datos BV-BRC. Se seleccionaron únicamente las secuencias.
+Las secuencias nucleotídicas de los segmentos S, M y L de OROV fueron obtenidas de la base de datos BV-BRC. Se seleccionaron únicamente las secuencias completas.
 
 2.	Obtención de un genoma y proteoma de referencia
 
@@ -46,15 +46,15 @@ Se predijo la afinidad de unión de los péptidos de las proteínas consenso de 
 
 6.1.	Filtro de consenso entre predictores
 
-Los resultados obtenidos de los programas para cada predicción fueron combinados. Para ello se elaboraron códigos en R: “HLA1_merging_script”, que combina los resultados de NetMHCpan y MHCFlurry, y “HLA2_merging_script” para combinar los resultados de NetMHCIIpan y MixMHC2Pred. De esta forma, se seleccionaron como candidatos a epítopos únicamente a los péptidos que, en consenso de los dos programas empleados, tenían afinidad por al menos un alelo HLA.
+Los resultados obtenidos de los programas para cada predicción fueron combinados. Para ello se elaboraron códigos en R: “HLA1_merging_script.R”, que combina los resultados de NetMHCpan y MHCFlurry, y “HLA2_merging_script.R” para combinar los resultados de NetMHCIIpan y MixMHC2Pred. De esta forma, se seleccionaron como candidatos a epítopos únicamente a los péptidos que, en consenso de los dos programas empleados, tenían afinidad por al menos un alelo HLA.
 
 6.2.	Filtro de conservación del epítopo
 
-A continuación, se filtraron los péptidos ubicados en regiones conservadas. La línea de códigos “Conservation_filt_script” elaborada en R se utilizó para identificar si un péptido contenía un residuo sujeto a mutaciones, usando como referencia el archivo con los residuos variables entre cepas de OROV.
+A continuación, se filtraron los péptidos ubicados en regiones conservadas. La línea de códigos “Conservation_filt_script.R" elaborada en R se utilizó para identificar si un péptido contenía un residuo sujeto a mutaciones, usando como referencia el archivo con los residuos variables entre cepas de OROV.
 
 6.3.	Generación de epítopos anidados
 
-Posteriormente, se generaron epítopos anidados, es decir, epítopos CD4 que contenían epítopos CD8. Esto se realizó con el objetivo de maximizar el número de epítopos que se incluirían en la proteína multiepitópica diseñada. Para esto se generó la línea de códigos “Nested_script”, la cual da como resultado una tabla con los epítopos CD4, los epítopos CD8 que incluye y los alelos HLA de tipo 2 y 1 para los cuales estos epítopos presentan afinidad. 
+Posteriormente, se generaron epítopos anidados, es decir, epítopos CD4 que contenían epítopos CD8. Esto se realizó con el objetivo de maximizar el número de epítopos que se incluirían en la proteína multiepitópica diseñada. Para esto se generó la línea de códigos “Nested.R”, la cual da como resultado una tabla con los epítopos CD4, los epítopos CD8 que incluye y los alelos HLA de tipo 2 y 1 para los cuales estos epítopos presentan afinidad. 
 
 6.4.	Filtro de epítopos con homología en humanos
 
